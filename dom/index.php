@@ -4,11 +4,22 @@
 <title>Suplence</title>
 <description>Suplence na TSC Nova Gorica</description>
 <?php
+function rssDate($timestamp=null)
+    {
+        /*** set the timestamp ***/
+        $timestamp = ($timestamp==null) ? time() : $timestamp;
+
+        /*** Mon, 02 Jul 2009 11:36:45 +0000 ***/
+        return date(DATE_RSS, $timestamp);
+    }
+	
 function write($class, $lecture, $teacher, $change, $classroom)
 {
 	echo "<item>\n";
-	echo "<title>$class" . ": $lecture -> $teacher </title>\n";
-	echo "<description>Pouk bo $lecture" . ". v ucilnici $classroom s prof. $teacher namesto $lecture </description>\n";
+	echo "<title>$class" . ": $lecture -> $change </title>\n";
+	echo "<description>Pouk bo $lecture" . ". v ucilnici $classroom namesto $teacher </description>\n";
+	echo "<guid>" . md5($class . $lecture . $teacher . $change . $classroom) . "</guid>" ;
+	echo "<pubDate>" . rssDate() . "</pubDate>";
 	echo "</item>\n";
 }
 
@@ -36,17 +47,24 @@ $lastClass = "";
 foreach($table[1]->find("tr") as $row)
 {
 	$cells= $row->find("td");
-	#if(ereg("4AZ", $cells[0]))  #sample filtering TODO
+	if(strlen($cells[0]->innertext)!=1)
 	{
-		if(strlen($cells[0]->innertext)!=1)
-		{
-			write($cells[0]->innertext, $cells[1]->innertext, $cells[2]->innertext, $cells[3]->innertext, $cells[4]->innertext);
-			$lastClass=$cells[0];
-		}
-		else
-		{
-			write($lastClass->innertext, $cells[0]->innertext, $cells[1]->innertext, $cells[2]->innertext, $cells[3]->innertext);
-		}
+		$class=$cells[0]->innertext;
+		$lecture=$cells[1]->innertext;
+		$teacher=$cells[2]->innertext;
+		$change=$cells[3]->innertext;
+		$classroom=$cells[4]->innertext;
+	}
+	else
+	{
+		$lecture=$cells[0]->innertext;
+		$teacher=$cells[1]->innertext;
+		$change=$cells[2]->innertext;
+		$classroom=$cells[3]->innertext;
+	}
+	if(eregi($_GET["q"], $class))  #TODO filtering?
+	{
+		write($class, $lecture, $teacher, $change, $classroom);	
 	}
 }
 ?>
