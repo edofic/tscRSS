@@ -1,35 +1,29 @@
 <?php
+function write($class, $lecture, $teacher, $change, $classroom)
+{
+	echo $class . "; " .  $lecture . "; " .  $teacher . "; " .  $change . "; " .  $classroom ."<br>";
+}
+
+#TODO get url
+$url="http://localhost/RSS/dom/quasi.html";
+
 # create and load the HTML
 include('simple_html_dom.php');
 $html = new simple_html_dom();
-$html = file_get_html("http://localhost/RSS/dom/quasi.html");
+$html = file_get_html($url);
 
+#get rows
 $table = $html->find("table");
-$rows = $table[1]->find("tr");
-#$cells= $rows[1]->find("td");
+#$rows = $table[1]->find("tr");
 
-//echo $cells[0];
-
-foreach($rows as $row)
+#parse rows
+foreach($table[1]->find("tr") as $row)
 {
-	$cells = $row->find("td");
-	foreach($cells as $cell)
+	$cells= $row->find("td");
+	#if(ereg("1AZ", $cells[0]))
 	{
-		echo $cell;
-		echo "; ";
+		write($cells[0], $cells[1], $cells[2], $cells[3], $cells[4]);
 	}
-	#echo count($cells);
-	echo "<br>";
 }
 
-
-
-# get an element representing the second paragraph
-#$element = $html->find("p");
-
-# modify it
-#$element[1]->innertext .= " and we're here to stay.";
-
-# output it!
-# echo $html->save();
 ?>
