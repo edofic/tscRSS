@@ -5,7 +5,7 @@ function write($class, $lecture, $teacher, $change, $classroom)
 }
 
 #TODO get url
-$url="http://localhost/RSS/dom/quasi.html";
+$url="http://localhost/rss/dom/data.htm";
 
 # create and load the HTML
 include('simple_html_dom.php');
