@@ -20,17 +20,31 @@ function write($class, $lecture, $teacher, $change, $classroom)
 	echo $class . "; " .  $lecture . "; " .  $teacher . "; " .  $change . "; " .  $classroom ."<br>";
 }
 
+#######
+#START"
+#######
 
-#TODO auto parse URL
-$url="data.htm";
-if($_GET["url"])
-{
-	$url = $_GET["url"];
-}
-
-
-# create and load the HTML
 include('simple_html_dom.php');
+
+#get current filename
+$url="http://asc.tsc.si/ngsupl/subst_left.htm"; ##TODO set the real one
+$html = new simple_html_dom();
+$html->load_file($url);
+$links = $html->find("a");
+$now = time();##mktime(15,0,1,2,3); #for testing
+$rightChoice="";
+foreach($links as $link)
+	{
+		$time=strtotime($link->plaintext);
+		if(($time+16*3600)>=$now) #show today's file until 16.00
+			$rightChoice=$link->href;
+		else
+			break;
+	}
+$html->clear();
+
+$url="http://asc.tsc.si/ngsupl/" . $rightChoice;
+# create and load the HTML
 $html = new simple_html_dom();
 $html->load_file($url);
 
