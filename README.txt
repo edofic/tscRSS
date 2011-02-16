@@ -1,9 +1,9 @@
 RSS feed generator
 ------------------
-data.htm je primer strani s katere bodo parsani podatki
-longer.htm je malo daljši primer
-zaenkrat je potrebno podati pot do htm datoteke z parametrom ?url=
+filtraranje se uporablja s parametrom ?q= ki mu podamo želeni regex izraz
+
+
+
 ------------------
 TODO
-dodaj avtomatsko pridobitev URL-ja
-filtriranje ne vrne vseh rezultatov
+datum objave
