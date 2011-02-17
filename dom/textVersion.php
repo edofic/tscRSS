@@ -43,9 +43,10 @@ foreach($links as $link)
 	}
 $html->clear();
 
+if($rightChoice!="")
+{
+
 $url="http://asc.tsc.si/ngsupl/" . $rightChoice;
-# create and load the HTML
-$html = new simple_html_dom();
 $html->load_file($url);
 
 #get rows
@@ -77,6 +78,7 @@ foreach($table[1]->find("tr") as $row)
 	{
 		write($class, $lecture, $teacher, $change, $classroom);	
 	}
+}
 }
 ?>
 <?php 
