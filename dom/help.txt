@@ -1,2 +1,0 @@
-http://net.tutsplus.com/tutorials/php/html-parsing-and-screen-scraping-with-the-simple-html-dom-library/
-http://simplehtmldom.sourceforge.net/manual.htm
